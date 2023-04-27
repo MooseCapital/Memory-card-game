@@ -1,32 +1,47 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
+import {useEffect, useState} from 'react'
+
 import './App.css'
+import Cards from "./Cards.jsx";
 
 function App() {
-  const [count, setCount] = useState(0)
+
+    const [score, setScore] = useState(0)
+    const [bestScore, setBestScore] = useState(0)
+
+    useEffect(() => {
+        setBestScore(prevState => {
+            if (prevState === 0) {
+                return score
+            } else if(prevState < score) {
+                return score
+            } else if (prevState >= score) {
+                return prevState
+            }
+        })
+    }, [score])
+    console.log(`best score ${bestScore}`)
 
   return (
-    <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+    <div id="container">
+        <header>
+            <h1>Memory card Game</h1>
+            <p className={"description"}>Click a different card each time to score a point</p>
+            <div className="score-holder">
+                <div className="score">{`Score: ${score}`}</div>
+                <div className="best-score">{`Best score: ${bestScore}`}</div>
+            </div>
+        </header>
+        <Cards
+            score={score}
+            setScore={setScore}
+            bestScore={bestScore}
+            setBestScore={setBestScore}
+
+
+        />
+
+
+
     </div>
   )
 }
