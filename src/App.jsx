@@ -19,7 +19,7 @@ function App() {
             }
         })
     }, [score])
-    console.log(`best score ${bestScore}`)
+    // console.log(`best score ${bestScore}`)
 
   return (
     <div id="container">

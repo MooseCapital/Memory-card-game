@@ -11,26 +11,13 @@ function Cards(props) {
             array[j] = temp;
         }
     }
-    // standard for loop filter and map combined
-   /*  const Cards = prevCards;
-            for (let i = 0; i < Cards.length; i++) {
-                if (Cards.length === 0) {
-                    Cards.push({id: id, url: url});
-                    return Cards;
-                }
-                if (Cards[i].id === id) {
-                    Cards.length = 0;
-                }
-                Cards.push({id: id, url: url});
-            }
-            return Cards;
-        }) */
 
     const [clickedCards, setClickedCards] = useState([])
 
     useEffect(() => {
         //shuffle data once on first load then not again until we call the game, since we pass it in,
         //if we leave the shuffleArray()  in the open, it will run every time our score state changes on parent component
+        shuffleArray(Data)
     },[])
 
 
@@ -42,7 +29,7 @@ function Cards(props) {
            return [...prevCards, {id: id, url: url}] */
            return prevCards.some(card => card.id === id) ? [] : [...prevCards, {id: id, url: url}]
         })
-
+        shuffleArray(Data)
     }
     console.log(clickedCards)
     console.log(`score: ${props.score}`)
@@ -50,7 +37,6 @@ function Cards(props) {
 
     useEffect(() => {
         //conditions to reset score or add one, add best score logic in app,
-        //we need to pass it back up to score state in parent
         if (clickedCards.length) {
             props.setScore(score => score + 1);
         }else {
